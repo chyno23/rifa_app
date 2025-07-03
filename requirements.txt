@@ -1,0 +1,8 @@
+# requirements.txt
+fastapi
+uvicorn
+pydantic
+sqlalchemy
+psycopg2-binary
+aio_pika
+python-dotenv
