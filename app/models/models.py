@@ -11,6 +11,9 @@ class Boleto(Base):
     numero = Column(Integer, unique=True, index=True)
     vendido = Column(Boolean, default=False)
     comprador = Column(String, nullable=True)
+    telefono = Column(String, nullable=True)  
+    direccion = Column(String, nullable=True) 
+
 
 class Sorteo(Base):
     __tablename__ = "sorteos"

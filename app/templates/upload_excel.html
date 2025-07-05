@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Importar Excel</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Importar boletos desde Excel 📥</h1>
+        <form action="/boletos/upload_excel" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" accept=".xlsx" required>
+            <button type="submit">Subir Excel</button>
+        </form>
+        <div style="margin-top: 20px;">
+            <a href="/boletos/view"><button>Volver a boletos</button></a>
+        </div>
+    </div>
+</body>
+</html>

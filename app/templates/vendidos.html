@@ -1,0 +1,119 @@
+
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <title>Boletos Vendidos</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>Boletos Vendidos</h1>
+    <table>
+        <tr>
+            <th>Número</th>
+            <th>Comprador</th>
+            <th>Teléfono</th>
+            <th>Dirección</th>
+        </tr>
+        {% for boleto in boletos %}
+        <tr>
+            <td>{{ boleto.numero }}</td>
+            <td>{{ boleto.comprador }}</td>
+            <td>{{ boleto.telefono }}</td>
+            <td>{{ boleto.direccion }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <a href="/boletos/view">Volver a boletos disponibles</a>
+</body>
+</html> -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Boletos Vendidos</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #444;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #eaeaea;
+        }
+        .search-input {
+            padding: 8px;
+            margin-bottom: 10px;
+            width: 50%;
+        }
+        .button {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: #444;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-top: 20px;
+        }
+        .button:hover {
+            background-color: #333;
+        }
+    </style>
+</head>
+<body>
+    <h1>Boletos Vendidos</h1>
+
+    <input type="text" id="searchInput" class="search-input" placeholder="Buscar comprador, número, dirección...">
+
+    <table id="boletosTable">
+        <thead>
+        <tr>
+            <th>Número</th>
+            <th>Comprador</th>
+            <th>Teléfono</th>
+            <th>Dirección</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for boleto in boletos %}
+        <tr>
+            <td>{{ boleto.numero }}</td>
+            <td>{{ boleto.comprador }}</td>
+            <td>{{ boleto.telefono }}</td>
+            <td>{{ boleto.direccion }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="/boletos/view" class="button">Volver a boletos disponibles</a>
+
+    <script>
+    document.getElementById("searchInput").addEventListener("keyup", function() {
+        let input = this.value.toLowerCase();
+        let rows = document.querySelectorAll("#boletosTable tbody tr");
+        rows.forEach(row => {
+            let match = false;
+            row.querySelectorAll("td").forEach(cell => {
+                if (cell.innerText.toLowerCase().includes(input)) {
+                    match = true;
+                }
+            });
+            row.style.display = match ? "" : "none";
+        });
+    });
+    </script>
+</body>
+</html>

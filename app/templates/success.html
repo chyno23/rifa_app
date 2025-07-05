@@ -1,0 +1,26 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <title>Compra Exitosa</title>
+</head>
+<body>
+    <h1>¡Compra exitosa!</h1>
+    <p>Has comprado exitosamente el boleto {{ numero }} a nombre de {{ comprador }}.</p>
+    <a href="/boletos/view">Volver a boletos</a>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Compra Exitosa</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>¡Compra exitosa!</h1>
+        <p>Has comprado exitosamente el boleto <strong>{{ numero }}</strong> a nombre de <strong>{{ comprador }}</strong>.</p>
+        <a class="btn" href="/boletos/view">Volver a boletos</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Boletos Disponibles</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Boletos Disponibles 🎫</h1>
+        <a href="/boletos/upload_excel">
+            <button>Importar Excel</button>
+        </a>
+        <a href="/sorteos/sorteo">
+            <button>Ir a Ejecutar Sorteo</button>
+        </a>
+        {% if boletos %}
+            <div>
+                {% for boleto in boletos %}
+                    <div class="boleto">
+                        <span>Boleto #{{ boleto.numero }}</span>
+                        <a href="/comprar/{{ boleto.numero }}">
+                            <button>Comprar</button>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No hay boletos disponibles.</p>
+        {% endif %}
+        <h2>Importar boletos desde Excel</h2>
+        <div style="margin-top: 20px;">
+            <a href="/docs#">
+                <button>Volver al inicio</button>
+
+            </a>
+            <a href="/boletos/vendidos">
+                <button>Ver Boletos Vendidos</button>
+            </a>
+            <a href="/sorteo/historial">
+                <button>Historial de sorteos</button>
+            </a>
+            <a href="/boletos/upload_excel">
+                <button>Importar Excel</button>
+            </a>
+        </div>
+        
+    </div>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Comprar Boleto</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <h1>Comprar Boleto #{{ boleto.numero }}</h1>
+
+  {% if boleto.vendido %}
+    <p style="color: red;">Este boleto ya está vendido a {{ boleto.comprador }}</p>
+  {% else %}
+    <form method="post" action="/boletos/view/{{ boleto.numero }}">
+    <label for="comprador">Nombre del comprador:</label><br>
+    <input type="text" id="comprador" name="comprador" required><br><br>
+
+    <label for="telefono">Teléfono:</label><br>
+    <input type="text" id="telefono" name="telefono" required><br><br>
+
+    <label for="direccion">Dirección:</label><br>
+    <input type="text" id="direccion" name="direccion" required><br><br>
+
+    <button type="submit">Comprar</button>
+    </form>
+  {% endif %}
+
+  <a href="/boletos/view">Volver a boletos</a>
+</body>
+</html>

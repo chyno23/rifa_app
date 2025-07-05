@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial de Sorteos</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5em;
+            color: #4CAF50;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 80%;
+            margin: 30px auto;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 10px 20px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #ddd;
+        }
+
+        .no-sorteos {
+            text-align: center;
+            font-size: 1.2em;
+            color: #888;
+        }
+
+        .back-button {
+            display: block;
+            width: 200px;
+            margin: 30px auto;
+            text-align: center;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .back-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>📜 Historial de Sorteos 📜</h1>
+
+    {% if sorteos %}
+    <table>
+        <tr>
+            <th>#</th>
+            <th>Número de Boleto</th>
+            <th>Comprador</th>
+            <th>Fecha</th>
+        </tr>
+        {% for sorteo in sorteos %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ sorteo.boleto.numero }}</td>
+            <td>{{ sorteo.boleto.comprador }}</td>
+            <td>{{ sorteo.fecha }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <p class="no-sorteos">No se han realizado sorteos aún.</p>
+    {% endif %}
+
+    <a href="/boletos/view" class="back-button">Volver a boletos</a>
+
+</body>
+</html>
+

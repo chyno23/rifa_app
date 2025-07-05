@@ -7,12 +7,15 @@ import asyncio
 def get_available_boletos(db: Session):
     return db.query(models.Boleto).filter_by(vendido=False).all()
 
-def buy_boleto(db: Session, numero: int, comprador: str):
+def buy_boleto(db: Session, numero: int, comprador: str, telefono:str, direccion:str):
     boleto = db.query(models.Boleto).filter_by(numero=numero, vendido=False).first()
     if not boleto:
         return None
     boleto.vendido = True
     boleto.comprador = comprador
+    boleto.telefono = telefono
+    boleto.direccion = direccion
+
     db.commit()
     asyncio.run(rabbitmq.publish_sale_message(f"Boleto {numero} vendido a {comprador}"))
     return boleto
