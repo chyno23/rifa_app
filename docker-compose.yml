@@ -9,17 +9,23 @@ services:
       POSTGRES_DB: raffle_db
     ports:
       - "5434:5432"
+    volumes:
+      - rifa_db_data:/var/lib/postgresql/data  # Volumen persistente para la base de datos
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U raffle"]
       interval: 5s
       retries: 5
-
+    networks:
+      - rifas_net
 
   rabbitmq1:
     image: rabbitmq:3-management
     ports:
       - "5673:5672"
       - "15673:15672"
+    networks:
+      - rifas_net
+
 
   api:
     build: .
@@ -30,4 +36,17 @@ services:
         condition: service_healthy
       rabbitmq1:
         condition: service_started
+    networks:
+      - rifas_net
+
+# Definición del volumen en el nivel superior
+volumes:
+  rifa_db_data:
+    name: rifa_db_data  # Aquí el volumen será identificado con el nombre del proyecto
+
+
+networks:
+  rifas_net:
+    external: true
+
 

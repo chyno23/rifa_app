@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}Rifa API{% endblock %}</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header>
+        <h1>Bienvenido a la Rifa</h1>
+        <nav>
+            <a href="/">Inicio</a> |
+            <a href="/boletos/view">Ver Boletos</a>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <p>© 2025 Rifa API</p>
+    </footer>
+</body>
+</html>

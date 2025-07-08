@@ -9,6 +9,7 @@ from app.models import models
 from fastapi.templating import Jinja2Templates
 from fastapi import Request
 from fastapi.responses import HTMLResponse
+from fastapi.responses import JSONResponse
 
 router = APIRouter()
 
@@ -35,3 +36,17 @@ def ejecutar_sorteo_web(request: Request, db: Session = Depends(get_db)):
 @router.get("/sorteo", response_class=HTMLResponse)
 def ver_sorteo(request: Request):
     return templates.TemplateResponse("sorteo.html", {"request": request})
+
+@router.post("/sorteo/run/json")
+def ejecutar_sorteo_json(db: Session = Depends(get_db)):
+    ganador = sorteos_service.run_sorteo(db)
+    if not ganador:
+        return JSONResponse(content={"success": False, "message": "No se pudo realizar el sorteo"}, status_code=200)
+
+    return JSONResponse(content={
+        "success": True,
+        "ganador": {
+            "numero": ganador.numero,
+            "comprador": ganador.comprador
+        }
+    }, status_code=200)

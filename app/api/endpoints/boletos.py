@@ -49,8 +49,8 @@ def boletos_disponibles(db: Session = Depends(get_db)):
     return boletos_service.get_available_boletos(db)
 
 @router.post("/buy")
-def comprar_boleto(numero: int, comprador: str, db: Session = Depends(get_db)):
-    boleto = boletos_service.buy_boleto(db, numero, comprador)
+def comprar_boleto(numero: int, comprador: str,telefono:str,direccion:str ,db: Session = Depends(get_db)):
+    boleto = boletos_service.buy_boleto(db, numero, comprador,telefono,direccion)
     if not boleto:
         raise HTTPException(status_code=404, detail="Boleto no disponible")
     return {"message": f"Boleto {numero} vendido a {comprador}"}
