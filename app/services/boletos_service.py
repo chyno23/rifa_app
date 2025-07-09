@@ -31,3 +31,26 @@ def crear_boletos(db: Session, cantidad: int):
     db.commit()
     return {"created": len(boletos), "skipped": cantidad - len(boletos)}
 
+def borrar_boleto(db, rifa_id, numero):
+    boleto = db.query(models.Boleto).filter_by(rifa_id=rifa_id, numero=numero).first()
+    if not boleto:
+        return False
+
+    db.delete(boleto)
+    db.commit()
+    return True
+
+def agregar_boletos_a_rifa(db, rifa_id, cantidad_extra):
+    rifa = db.query(models.Rifa).filter_by(id=rifa_id).first()
+    if not rifa:
+        return None
+    
+    ultimo_numero = db.query(models.Boleto).filter_by(rifa_id=rifa_id).order_by(models.Boleto.numero.desc()).first()
+    start = ultimo_numero.numero + 1 if ultimo_numero else 1
+
+    for i in range(start, start + cantidad_extra):
+        boleto = models.Boleto(numero=i, rifa_id=rifa_id)
+        db.add(boleto)
+
+    db.commit()
+    return True

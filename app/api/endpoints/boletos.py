@@ -34,7 +34,7 @@ import pandas as pd
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, File
 from sqlalchemy.orm import Session
 from app.api.deps import get_db
-from app.services import boletos_service
+from app.services import boletos_service,rifas_service
 from app.models import models
 from fastapi.templating import Jinja2Templates
 from fastapi import Request
@@ -90,3 +90,13 @@ def upload_boletos(file: UploadFile = File(...), db: Session = Depends(get_db)):
 @router.get("/upload_excel", response_class=HTMLResponse)
 def formulario_upload_excel(request: Request):
     return templates.TemplateResponse("upload_excel.html", {"request": request})
+
+@router.delete("/boletos/{boleto_id}/{numero}")
+def borrar_boleto(boleto_id: int, numero: int, db: Session = Depends(get_db)):
+    boleto = db.query(models.Boleto).filter_by(id=boleto_id, numero=numero).first()
+    if not boleto:
+        raise HTTPException(status_code=404, detail="Boleto no encontrado o no coincide el número.")
+
+    db.delete(boleto)
+    db.commit()
+    return {"message": f"Boleto {numero} eliminado correctamente."}

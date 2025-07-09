@@ -31,4 +31,3 @@ def get_sorteos_con_boletos(db: Session):
         boleto = db.query(models.Boleto).filter_by(id=s.ganador_id).first()
         resultado.append({"boleto": boleto, "fecha": s.fecha})
     return resultado
-

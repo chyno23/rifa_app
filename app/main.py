@@ -1,44 +1,12 @@
 
 # app/main.py
-# from fastapi import FastAPI, Request
-# from fastapi.templating import Jinja2Templates
-# from fastapi.responses import HTMLResponse
-# from fastapi.staticfiles import StaticFiles
-# from app.api.endpoints import boletos, sorteos
-# from app.db2 import engine
-# from app.models import models
-# from app.services import boletos_service
-# from app.db2 import SessionLocal
-
-# models.Base.metadata.create_all(bind=engine)
-
-# app = FastAPI(title="API de Rifas")
-
-# # app.include_router(boletos.router)
-# # app.include_router(sorteos.router)
-# app.include_router(boletos.router, prefix="/boletos", tags=["Boletos"])
-# app.include_router(sorteos.router, prefix="/sorteos", tags=["Sorteos"])
-
-
-# # Crear boletos si no existen
-# db = SessionLocal()
-# if db.query(models.Boleto).count() == 0:
-#     boletos_service.crear_boletos(db, 100)  # crea 100 boletos
-# db.close()
-
-# # Crear boletos si no existen
-# db = SessionLocal()
-# if db.query(models.Boleto).count() == 0:
-#     boletos_service.crear_boletos(db, 100)  # crea 100 boletos
-# db.close()
-
 from fastapi import FastAPI, Request
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi import Form
 
-from app.api.endpoints import boletos, sorteos
+from app.api.endpoints import boletos, sorteos, rifas
 from app.db2 import engine, SessionLocal
 from app.models import models
 from app.services import boletos_service
@@ -58,7 +26,7 @@ templates = Jinja2Templates(directory="app/templates")
 # Incluir rutas
 app.include_router(sorteos.router, prefix="/sorteos", tags=["Sorteos"])
 app.include_router(boletos.router, prefix="/boletos",tags=["Boletos"])
-app.include_router(sorteos.router, prefix="/sorteos",)
+app.include_router(rifas.router, prefix="/rifas", tags=["Rifas"])
 
 
 # Crear boletos si no existen
