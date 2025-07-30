@@ -2,15 +2,21 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.api.deps import get_db
 from app.services import rifas_service
+from pydantic import BaseModel
 
 router = APIRouter()
 
+class RifaCreate(BaseModel):
+    nombre: str
+    descripcion: str = ""
+    cantidad_boletos: int
+
 @router.post("/rifas/create")
-def crear_rifa(nombre: str, descripcion: str = "", cantidad_boletos: int = 0, db: Session = Depends(get_db)):
-    if cantidad_boletos <= 0:
+def crear_rifa(rifa: RifaCreate, db: Session = Depends(get_db)):
+    if rifa.cantidad_boletos <= 0:
         raise HTTPException(status_code=400, detail="La cantidad de boletos debe ser mayor a 0")
-    rifa = rifas_service.crear_rifa(db, nombre, descripcion, cantidad_boletos)
-    return {"message": f"Rifa '{rifa.nombre}' creada con ID {rifa.id}"}
+    nueva_rifa = rifas_service.crear_rifa(db, rifa.nombre, rifa.descripcion, rifa.cantidad_boletos)
+    return {"message": f"Rifa '{nueva_rifa.nombre}' creada con ID {nueva_rifa.id}"}
 
 @router.get("/rifas")
 def obtener_rifas(db: Session = Depends(get_db)):
