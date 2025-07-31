@@ -11,7 +11,7 @@ class RifaCreate(BaseModel):
     descripcion: str = ""
     cantidad_boletos: int
 
-@router.post("/rifas/rifas/create")
+@router.post("/create")
 def crear_rifa(rifa: RifaCreate, db: Session = Depends(get_db)):
     if rifa.cantidad_boletos <= 0:
         raise HTTPException(status_code=400, detail="La cantidad de boletos debe ser mayor a 0")
@@ -22,14 +22,14 @@ def crear_rifa(rifa: RifaCreate, db: Session = Depends(get_db)):
 def obtener_rifas(db: Session = Depends(get_db)):
     return rifas_service.get_rifas(db)
 
-@router.get("/rifas/{rifa_id}")
+@router.get("/id/{rifa_id}")
 def obtener_rifa(rifa_id: int, db: Session = Depends(get_db)):
     rifa = rifas_service.get_rifa_by_id(db, rifa_id)
     if not rifa:
         raise HTTPException(status_code=404, detail="Rifa no encontrada")
     return rifa
 
-@router.delete("/rifas/{rifa_id}")
+@router.delete("/{rifa_id}")
 def eliminar_rifa(rifa_id: int, db: Session = Depends(get_db)):
     if not rifas_service.delete_rifa(db, rifa_id):
         raise HTTPException(status_code=404, detail="Rifa no encontrada")
