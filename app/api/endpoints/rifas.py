@@ -11,7 +11,7 @@ class RifaCreate(BaseModel):
     descripcion: str = ""
     cantidad_boletos: int
 
-@router.post("/rifas/create")
+@router.post("/rifas/rifas/create")
 def crear_rifa(rifa: RifaCreate, db: Session = Depends(get_db)):
     if rifa.cantidad_boletos <= 0:
         raise HTTPException(status_code=400, detail="La cantidad de boletos debe ser mayor a 0")
